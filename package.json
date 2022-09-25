@@ -1,0 +1,24 @@
+{
+  "name": "crawler-importer-db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "mongodb": "^4.9.1",
+    "morgan": "~1.9.1",
+    "puppeteer": "^17.0.0",
+    "@types/puppeteer": "^5.4.6",
+    "typescript": "4.8.3",
+    "fs": "^0.0.1-security"
+  },
+  "author": "Akira Kuru",
+  "license": "ISC"
+}
+
+
+

@@ -1,0 +1,8 @@
+.env
+/node_modules
+/database
+/user_data
+/json
+/.vscode
+
+package-lock.json
