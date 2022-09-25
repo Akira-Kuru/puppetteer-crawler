@@ -76,6 +76,7 @@ function delay(time: number) {
 //   });
 // }
 
+
 async function authentication(page: puppeteer.Page){
   const user_name: any = process.env.TWITTER_USERNAME;
   const password: any = process.env.TWITTER_PASSWORD;
