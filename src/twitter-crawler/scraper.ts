@@ -99,8 +99,8 @@ async function authentication(page: puppeteer.Page){
 
   // hashtag_crawler(page);
 }
-
-async function fieldChecker(page, field,){
+// TODO: Uncomment
+async function fieldChecker(page:any , field:any){
   const text = await page.evaluate(elem => (<HTMLElement>elem).innerHTML, field[0]) as string;
   const removeClass = text.replace(/class="[a-zA-Z0-9:;\.\s\(\)\-\,]*"/g,"");
   const removeStyle = removeClass.replace(/style="[a-zA-Z0-9:;\.\s\(\)\-\,]*"/g,"");
@@ -168,6 +168,7 @@ async function hashtagCrawler(page: puppeteer.Page){
       // const userRemoveSpan = userRemoveStyle.replace(/<\/?span[^>]*>/g,"");
       // const userRegex = new RegExp('('+hashtagJSON.hashtags[h].text+')', 'gi');
       // const userArray = userRegex.exec(userText);
+
 
       const username = fieldChecker(page, user);
       const userArray = hashtagChecker(page, user, hashtagJSON, h);

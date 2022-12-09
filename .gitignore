@@ -4,5 +4,6 @@
 /user_data
 /json
 /.vscode
+/dist
 
 package-lock.json
