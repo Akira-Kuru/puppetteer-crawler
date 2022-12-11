@@ -22,17 +22,17 @@ export const twitterCrawler = async () => {
     width: 1280, height: 800,
     deviceScaleFactor: 1
   })
-  await page.goto('https://twitter.com/login',{
-    waitUntil: 'networkidle2'
-  });
-  const header = await page.$('header')
+//   await page.goto('https://twitter.com/login',{
+//     waitUntil: 'networkidle2'
+//   });
+//   const header = await page.$('header')
   // console.log(header);
   
-  if(header == null){
-    authentication(page);
-  }else{
+//   if(header == null){
+//     authentication(page);
+//   }else{
     hashtagCrawler(page);
-  }
+//   }
 
 
   // await autoScroll(page);
@@ -158,7 +158,6 @@ async function hashtagCrawler(page: puppeteer.Page){
     const currentTimeline = await page.$$('div[aria-label="Timeline: Search timeline"] > div > div');
     // console.log(currentTimeline.length);
   
-    // let Users : Users;
     // TODO: Evaluation and Regex needs to be moved into a Function.
     for(let i=1; i<=currentTimeline.length; i++){
       // TWITTER: Username Field
@@ -171,8 +170,12 @@ async function hashtagCrawler(page: puppeteer.Page){
       // const userArray = userRegex.exec(userText);
 
 
-      const username = fieldChecker(page, user);
+      let username = fieldChecker(page, user);
+    //   username.then(function(result) {
+    //     username = result 
+    //   })
       const userArray = hashtagChecker(page, user, hashtagJSON, h);
+      
 
       // TWITTER: Tag Field
       const [tag] = await page.$x('//div[@aria-label="Timeline: Search timeline"]/div/div['+i+']/div/div/div/div/div[2]/div[1]/div[1]/div/div[2]/div/a/div/div/span');
@@ -193,6 +196,9 @@ async function hashtagCrawler(page: puppeteer.Page){
       // const descriptionArray = descriptionRegex.exec(descriptionText);
 
       const description = fieldChecker(page, desc);
+      description.then(function(result) {
+        console.log(result) // "Some User token"
+      })
       const descriptionArray = hashtagChecker(page, desc, hashtagJSON, h);
 
       let hashtag = '';
@@ -208,7 +214,7 @@ async function hashtagCrawler(page: puppeteer.Page){
       const Users = [{
         'id':i,
         "username": username,
-        "description" : description.then(),
+        "description" : description,
         "profileImage": '',
         "tag" : tagName,
         "hashtag": hashtag

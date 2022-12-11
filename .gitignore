@@ -2,7 +2,7 @@
 /node_modules
 /database
 /user_data
-/json
+/json/hashtag.json
 /.vscode
 /dist
 
