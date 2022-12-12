@@ -14,7 +14,11 @@ interface Users {
   id : number;
   username : string;
   description : string;
+  icon : string;
   tag : string;
+  hashtag: string;
+  // createdAt: Date;
+  // updatedAt: Date;
 }
 
 (async () => {
@@ -54,9 +58,11 @@ async function hashtagCrawler(page: puppeteer.Page){
   const jsonString = fs.readFileSync('../../json/hashtag.json','utf-8');
   const hashtagJSON = JSON.parse(jsonString);
   const hashtagLength = Object.keys(hashtagJSON.hashtags).length;
+  let data;
 
-  // for(let h=0; h<hashtagLength; h++){
-  for(let h=0; h<1; h++){
+  for(let h=0; h<hashtagLength; h++){
+  
+  // for(let h=0; h<=1; h++){
     await page.goto('https://twitter.com/hashtag/'+hashtagJSON.hashtags[h].text+'?f=user',{
       waitUntil: 'networkidle2'
     });
@@ -66,8 +72,8 @@ async function hashtagCrawler(page: puppeteer.Page){
     const currentTimeline = await page.$$('div[aria-label="Timeline: Search timeline"] > div > div');
   
     // TODO: Evaluation and Regex needs to be moved into a Function.
-    // for(let i=1; i<=currentTimeline.length; i++){
-    for(let i=1; i<=1; i++){
+    for(let i=1; i<=currentTimeline.length; i++){
+    // for(let i=1; i<=3; i++){
       const [username, userArray] = await extractUsername(page, hashtagJSON, h, i);
       const [tagName, tagArray] = await extractTag(page, hashtagJSON, h, i);
       const [description, descriptionArray] = await extractDescription(page, hashtagJSON, h, i);
@@ -80,17 +86,40 @@ async function hashtagCrawler(page: puppeteer.Page){
         hashtag = 'no';
       }
 
-      const Users = [{
-        "id":i,
+      const Users: Users = {
+        'id':i,
         "username": username,
         "description" : description,
         "icon": icon,
         "tag" : tagName,
         "hashtag": hashtag
-      }];
+        // createdAt: Date.now(),
+        // updatedAt: Date.now()
+      };
 
-      console.log(Users)
+      // const newUser = Object.create(Users);
+      // newUser.id = i;
+      // newUser.username = username;
+      // newUser.description = description;
+      // newUser.icon = icon;
+      // newUser.tag = tagName;
+      // newUser.hashtag = hashtag;
+
+
+      
+      data = JSON.stringify(Users);
+
+      fs.writeFile(`../../files/${Users.tag}-${Users.hashtag}.json`, data, err => {
+        if (err) {
+          throw err
+        }
+        console.log('JSON data is saved.')
+      })
     }
-    autoScroll(page);
+    
+    
+
+    // autoScroll(page);
   }
+  // fs.writeFileSync('./items.txt', items.join('\n') + '\n');
 }

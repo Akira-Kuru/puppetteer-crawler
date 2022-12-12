@@ -6,6 +6,7 @@
 /json/hashtag-backup.json
 /.vscode
 /dist
+/files
 /src/twitter-crawler/example.ts
 
 package-lock.json
