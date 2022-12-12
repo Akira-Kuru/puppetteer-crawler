@@ -3,7 +3,9 @@
 /database
 /user_data
 /json/hashtag.json
+/json/hashtag-backup.json
 /.vscode
 /dist
+/src/twitter-crawler/example.ts
 
 package-lock.json
