@@ -1,5 +1,6 @@
 export async function fieldCheck(page:any , field:any){
   const text = await page.evaluate(elem => (<HTMLElement>elem).innerHTML, field[0]) as string;
+  
   const removeClass = text.replace(/class="[a-zA-Z0-9:;\.\s\(\)\-\,]*"/g,"");
   const removeStyle = removeClass.replace(/style="[a-zA-Z0-9:;\.\s\(\)\-\,]*"/g,"");
   const removeSpan = removeStyle.replace(/<\/?span[^>]*>/g,"");
