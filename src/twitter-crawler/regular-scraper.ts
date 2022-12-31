@@ -12,8 +12,13 @@ import {
 } from '../utils/extractors';
 import { 
   connectDB,
-  closeDB } from '../utils/database'
-import { MongoClient } from 'mongodb';
+  closeDB,
+  findEntry,
+  insertEntry
+} from '../utils/database'
+import { exit } from 'process';
+import { disposeEmitNodes } from 'typescript';
+// import { MongoClient } from 'mongodb';
 
 dotenv.config({ path: '../../.env' });
 
@@ -55,6 +60,20 @@ interface Users {
 })();
 
 async function hashtagCrawler(page: puppeteer.Page){
+  await connectDB();
+  await findEntry('', 20);
+  const DummyUser: Users = {
+    "id":0,
+    "username":"",
+    "description":"",
+    "icon":"",
+    "tag":"",
+    "hashtag":""
+  }
+  await insertEntry('', DummyUser);
+  await closeDB();
+
+  exit();
   // const client:MongoClient = await connectDB()
   //   .then(console.log)
   //   .catch(console.error);
@@ -132,7 +151,7 @@ async function hashtagCrawler(page: puppeteer.Page){
     // autoScroll(page);
   }
 
-  // await closeDB(client);
+  await closeDB(client);
 
   // await page.waitForNavigation()
   // await page.close();
